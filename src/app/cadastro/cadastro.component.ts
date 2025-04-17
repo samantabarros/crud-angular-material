@@ -25,10 +25,10 @@ import { ClienteService } from '../cliente.service';
 })
 export class CadastroComponent {
   cliente: Cliente = Cliente.novoCliente();
-
+  
   constructor(private _clienteService: ClienteService){}
 
-  salvar(){
+  salvarCliente(){
     this._clienteService.salvar(this.cliente);
   }
 }
