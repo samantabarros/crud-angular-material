@@ -9,7 +9,8 @@ import {MatButtonModule} from '@angular/material/button';
 import { Cliente } from './cliente';
 import { ClienteService } from '../cliente.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { query } from '@angular/animations';
+import {NgxMaskDirective, provideNgxMask} from 'ngx-mask';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-cadastro',
@@ -20,8 +21,10 @@ import { query } from '@angular/animations';
     MatFormFieldModule, 
     MatInputModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    NgxMaskDirective,
   ],
+  providers: [provideNgxMask()],
   templateUrl: './cadastro.component.html',
   styleUrl: './cadastro.component.scss'
 })
@@ -32,7 +35,9 @@ export class CadastroComponent implements OnInit {
   constructor(
     private _clienteService: ClienteService, 
     private route: ActivatedRoute,
-    private router: Router){}
+    private router: Router,
+    private snackBar: MatSnackBar
+  ){}
 
   ngOnInit(): void {
     this.route.queryParamMap.subscribe((query: any) => {
@@ -56,9 +61,16 @@ export class CadastroComponent implements OnInit {
     if(!this.atualizando){
       this._clienteService.salvar(this.cliente);
       this.cliente = Cliente.novoCliente();
+      this.router.navigate(['/consulta']);
+      this.mensagemSucesso('Cliente cadastrado com sucesso!');
     }else{
       this._clienteService.atualizar(this.cliente);
       this.router.navigate(['/consulta']);
+      this.mensagemSucesso('Cliente atualizado com sucesso!');
     }
+  }
+
+  mensagemSucesso(mensagem: string){
+    this.snackBar.open(mensagem, 'Ok')
   }
 }

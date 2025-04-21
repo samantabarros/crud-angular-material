@@ -11,6 +11,7 @@ import { Cliente } from '../cadastro/cliente';
 import {MatTableModule} from '@angular/material/table';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-consulta',
@@ -23,7 +24,10 @@ export class ConsultaComponent implements OnInit {
   colunasTable: string[] = ['id', 'nome', 'cpf','dataNascimento', 'email', 'acoes']
   nomeBusca: string  = '';
 
-  constructor(private _clienteService: ClienteService, private router: Router){}
+  constructor(
+    private _clienteService: ClienteService, 
+    private router: Router,
+    private snackBar: MatSnackBar){}
 
   ngOnInit(){
     this.listaClientes = this._clienteService.pesquisarClientes('');
@@ -44,5 +48,13 @@ export class ConsultaComponent implements OnInit {
   deletarCliente(cliente: Cliente){
     this._clienteService.deletar(cliente);
     this.listaClientes = this._clienteService.pesquisarClientes('');
+    this.mensagemSucesso('Cliente deletado com sucesso!');
+  }
+
+  mensagemSucesso(mensagem: string){
+    this.snackBar.open(mensagem, 'Ok',{
+      verticalPosition: 'top',
+    })
+
   }
 }
