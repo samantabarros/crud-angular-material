@@ -12,10 +12,11 @@ import {MatTableModule} from '@angular/material/table';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CpfPipe } from '../shared/pipes/cpf.pipe';
 
 @Component({
   selector: 'app-consulta',
-  imports: [FormsModule, MatFormFieldModule, MatInputModule, MatCardModule, MatButtonModule, FlexLayoutModule, MatIconModule, MatTableModule, CommonModule],
+  imports: [FormsModule, MatFormFieldModule, MatInputModule, MatCardModule, MatButtonModule, FlexLayoutModule, MatIconModule, MatTableModule, CommonModule, CpfPipe],
   templateUrl: './consulta.component.html',
   styleUrl: './consulta.component.scss'
 })
