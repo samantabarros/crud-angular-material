@@ -1,18 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import {MatCardModule} from '@angular/material/card';
+import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { ClienteService } from '../cliente.service';
 import { Cliente } from '../cadastro/cliente';
-import {MatTableModule} from '@angular/material/table';
+import { MatTableModule } from '@angular/material/table';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CpfPipe } from '../shared/pipes/cpf.pipe';
+import { ConfirmationDialogService } from '../services/confirmation-dialog.service';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-consulta',
@@ -22,11 +24,12 @@ import { CpfPipe } from '../shared/pipes/cpf.pipe';
 })
 export class ConsultaComponent implements OnInit {
   listaClientes: Cliente[] = [];
-  colunasTable: string[] = ['id', 'nome', 'cpf','dataNascimento', 'email', 'acoes']
-  nomeBusca: string  = '';
+  colunasTable: string[] = ['id', 'nome', 'cpf', 'dataNascimento', 'email', 'acoes']
+  nomeBusca: string = '';
+  confirmationDialogService = inject(ConfirmationDialogService);
 
   constructor(
-    private _clienteService: ClienteService, 
+    private _clienteService: ClienteService,
     private router: Router,
     private snackBar: MatSnackBar){}
 
@@ -37,13 +40,19 @@ export class ConsultaComponent implements OnInit {
   pesquisar(){
     this.listaClientes = this._clienteService.pesquisarClientes(this.nomeBusca)
   }
-  
+
   preparaEditar(id: string){
-    this.router.navigate(['cadastro'], {queryParams: {'id': id}});
+    this.router.navigate(['cadastro'], { queryParams: { 'id': id } });
   }
 
   preparaDeletar(cliente: Cliente){
-    cliente.deletando = true;
+    this.confirmationDialogService.openDialog(cliente)
+    .pipe(filter((answer) => answer === true))
+    .subscribe(() => {
+      this._clienteService.deletar(cliente);
+      this.listaClientes = this._clienteService.pesquisarClientes('');
+      this.mensagemSucesso('Cliente deletado com sucesso!');
+    })
   }
 
   deletarCliente(cliente: Cliente){
