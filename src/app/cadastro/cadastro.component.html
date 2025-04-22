@@ -8,7 +8,7 @@
                 <mat-card-content class="mt-20">
                     <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="16px">
                         <div fxLayout="column" fxFlex="900px">
-                            <mat-form-field class="full-width" >
+                            <mat-form-field class="full-width"  appearance="outline">
                                 <mat-label>Nome: *</mat-label>
                                 <input 
                                   type="text" 
@@ -22,7 +22,7 @@
                     </div>
                     <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="16px">
                         <div fxLayout="column" fxFlex="900px">
-                            <mat-form-field class="full-width">
+                            <mat-form-field class="full-width"  appearance="outline">
                                 <mat-label>Email: *</mat-label>
                                 <input 
                                   type="email" 
@@ -36,7 +36,7 @@
                     </div>
                     <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="16px">
                         <div fxLayout="column" fxFlex="400px">
-                            <mat-form-field class="full-width">
+                            <mat-form-field class="full-width"  appearance="outline">
                                 <mat-label>CPF: *</mat-label>
                                 <input 
                                   type="text" 
@@ -51,7 +51,7 @@
                     </div>
                     <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="16px">
                         <div fxLayout="column" fxFlex="400px">
-                            <mat-form-field class="full-width">
+                            <mat-form-field class="full-width"  appearance="outline">
                                 <mat-label>Data Nascimento: *</mat-label>
                                 <input
                                   type="text" 
@@ -59,6 +59,30 @@
                                   [(ngModel)]="cliente.dataNascimento"
                                   name="dataNascimento"
                                   mask="00/00/0000">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="16px">
+                        <div fxLayout="column" fxFlex="400px">
+                            <mat-form-field class="full-width"  appearance="outline">
+                                <mat-label>UF *</mat-label>
+                                <mat-select [(value)]="cliente.uf" (selectionChange)="carregarMunicipios($event)">
+                                    <mat-option *ngFor="let uf of estados" [value]="uf.sigla">
+                                        {{uf.sigla}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="16px">
+                        <div fxLayout="column" fxFlex="400px">
+                            <mat-form-field class="full-width"  appearance="outline">
+                                <mat-label>Município *</mat-label>
+                                <mat-select [(value)]="cliente.municipio">
+                                    <mat-option *ngFor="let m of municipios" [value]="m.nome">
+                                        {{m.nome}}
+                                    </mat-option>
+                                </mat-select>
                             </mat-form-field>
                         </div>
                     </div>
