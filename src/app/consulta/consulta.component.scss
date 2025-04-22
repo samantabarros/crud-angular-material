@@ -1,0 +1,26 @@
+td{
+    height: 55px;
+}
+
+.btn-actions{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0;
+    margin: 0;
+}
+
+.btn-editar {
+    color: #1976d2 !important; 
+    transition: 0.3s;
+    border: none;
+    background-color: transparent;
+  
+  }
+  .btn-excluir {
+    color: #d32f2f !important; /* Vermelho Material Design */
+    transition: 0.3s;
+    border: none;
+    background-color: transparent;
+  
+  }

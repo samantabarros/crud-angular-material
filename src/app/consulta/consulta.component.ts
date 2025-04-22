@@ -15,16 +15,17 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { CpfPipe } from '../shared/pipes/cpf.pipe';
 import { ConfirmationDialogService } from '../services/confirmation-dialog.service';
 import { filter } from 'rxjs';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-consulta',
-  imports: [FormsModule, MatFormFieldModule, MatInputModule, MatCardModule, MatButtonModule, FlexLayoutModule, MatIconModule, MatTableModule, CommonModule, CpfPipe],
+  imports: [FormsModule, MatFormFieldModule, MatInputModule, MatCardModule, MatButtonModule, MatTooltipModule, FlexLayoutModule, MatIconModule, MatTableModule, CommonModule, CpfPipe],
   templateUrl: './consulta.component.html',
   styleUrl: './consulta.component.scss'
 })
 export class ConsultaComponent implements OnInit {
   listaClientes: Cliente[] = [];
-  colunasTable: string[] = ['id', 'nome', 'cpf', 'dataNascimento', 'email', 'acoes']
+  colunasTable: string[] = ['nome', 'cpf', 'dataNascimento', 'municipio', 'uf','email',  'acoes']
   nomeBusca: string = '';
   confirmationDialogService = inject(ConfirmationDialogService);
 
